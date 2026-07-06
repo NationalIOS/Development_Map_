@@ -49,7 +49,6 @@
             font-size: 15.2px;
             min-width: 320px;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
         select:hover, select:focus {
             border-color: var(--teal);
@@ -57,7 +56,6 @@
         }
 
         #map { height: calc(100vh - 82px); width: 100%; }
-
         .custom-marker { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6)); }
 
         .leaflet-popup-content-wrapper {
@@ -65,7 +63,6 @@
             box-shadow: 0 25px 70px rgba(0,0,0,0.8);
             border: 1px solid #334155;
             background: #f8fafd;
-            overflow: hidden;
         }
         .popup-header {
             background: linear-gradient(to right, var(--navy), var(--deepblue));
@@ -85,7 +82,6 @@
             border-radius: 12px;
             margin: 14px 0 20px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            border: 1px solid #e2e8f0;
         }
         .download-btn {
             display: inline-flex;
@@ -142,18 +138,12 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Initialize map
         const map = L.map('map', { zoomControl: true }).setView([31.8, -97.2], 7);
         
-        const topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '© Esri', maxZoom: 19
-        });
-        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '© Esri', maxZoom: 19
-        });
+        const topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { attribution: '© Esri', maxZoom: 19 });
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '© Esri', maxZoom: 19 });
         topoLayer.addTo(map);
 
-        // Custom marker
         const createIcon = (color) => L.divIcon({
             className: 'custom-marker',
             html: `<div style="width:34px;height:34px;background:${color};border:3.5px solid white;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,0.5),inset 0 2px 4px rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;"><div style="width:11px;height:11px;background:rgba(255,255,255,0.95);border-radius:50%;"></div></div>`,
@@ -165,10 +155,24 @@
         const orangeIcon = createIcon('#f59e0b');
         const tealIcon   = createIcon('#22d3ee');
 
-        // Project data
         const developments = {
-            construction: [ /* ... your construction projects ... */ ],
-            pipeline: [ /* ... your pipeline projects ... */ ]
+            construction: [
+                { name: "Rockwall Industrial", city: "Rockwall, TX", lat: 32.90745, lng: -96.42921, size: "285,000 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/rockwall-industrial.png", address: "", acres: "", lots: "", brochure: "" },
+                { name: "South Prosperity", city: "Krugerville, TX", lat: 33.26495, lng: -96.98484, size: "64,950 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 16, 2026, 07_42_34 AM.png", address: "Block A, Prosperity Way, Krugerville, TX 76227", acres: "21.41 AC", lots: "7 IOS Lots", brochure: "" },
+                { name: "Waxahachie IOS", city: "Waxahachie, TX", lat: 32.36899, lng: -96.87912, size: "23,200 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 15, 2026, 01_36_56 PM.png", address: "", acres: "", lots: "", brochure: "" },
+                { name: "San Marcos IOS Park", city: "San Marcos, TX", lat: 29.80152, lng: -97.99933, size: "107,600 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/san-marcos-ios-park.png", address: "6226 Old Bastrop Hwy, San Marcos, TX 78666", acres: "", lots: "8 IOS Lots", brochure: "" },
+                { name: "Heritage 287", city: "Mansfield, TX", lat: 32.56719, lng: -97.11799, size: "258,444 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/heritage-287.png", address: "", acres: "", lots: "", brochure: "" },
+                { name: "Mansfield Lakeview", city: "Mansfield, TX", lat: 32.54287, lng: -97.06734, size: "22,800 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/mansfield-lakeview.png", address: "1266 Lakeview Drive, Mansfield, TX 76065", acres: "13.96 AC", lots: "", brochure: "" },
+                { name: "Melissa Industrial - Master Halco", city: "Melissa, TX", lat: 33.29634, lng: -96.53752, size: "", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 15, 2026, 01_44_26 PM.png", address: "3550 Industrial Drive, Melissa, TX 75454", acres: "3.34 AC", lots: "1 IOS Lots", brochure: "" }
+            ],
+            pipeline: [
+                { name: "Sherman IOS", city: "Sherman, TX", lat: 33.68906, lng: -96.65162, size: "", status: "Available", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 15, 2026, 01_41_30 PM.png", address: "4800 FM 1417, Sherman, Texas 75092", acres: "39.09 AC", lots: "7 IOS Lots", brochure: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/Sherman- National IOS .pdf" },
+                { name: "Waxahachie FM66L", city: "Waxahachie, TX", lat: 32.36899, lng: -96.87912, size: "23,200 SF", status: "Delivering Q1 2027", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 15, 2026, 01_36_56 PM.png", address: "FM66L, Waxahachie, TX 75168", acres: "", lots: "6 IOS Lots", brochure: "" },
+                { name: "Alvarado 22.9", city: "Alvarado, TX", lat: 32.41677, lng: -97.17536, size: "", status: "Available", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/alvarado-22.9.png", address: "8749 E US-67, Alvarado, TX 76009", acres: "12.00 AC", lots: "2 IOS Lots", brochure: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/Alvarado - National IOS.pdf" },
+                { name: "Royse City Phase II", city: "Royse City, TX", lat: 32.975, lng: -96.333, status: "Active Pipeline", image: "", address: "", acres: "", lots: "", brochure: "" },
+                { name: "I-35 & I-20 South FW", city: "Fort Worth, TX", lat: 32.75, lng: -97.31, size: "494,580 SF", status: "Active Pipeline", image: "", address: "", acres: "", lots: "", brochure: "" },
+                { name: "North Fort Worth", city: "North Fort Worth, TX", lat: 32.99283, lng: -97.28642, size: "22,800 SF", status: "Active Pipeline", image: "", address: "", acres: "5.33 AC", lots: "", brochure: "" }
+            ]
         };
 
         const allProjects = [...developments.construction, ...developments.pipeline];
@@ -176,7 +180,6 @@
         const constructionLayer = L.layerGroup();
         const pipelineLayer = L.layerGroup();
 
-        // Add markers function
         function addMarkers(layer, projects, icon) {
             projects.forEach(dev => {
                 const html = `
@@ -194,7 +197,7 @@
                             
                             ${dev.brochure ? `<a href="${dev.brochure}" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download Brochure</a>` : ''}
                             
-                            <div style="margin-top:12px; padding:6px 12px; border-radius:6px; display:inline-block; background:${dev.status === 'Available' ? '#d1fae5' : '#fef3c7'}; color:${dev.status === 'Available' ? '#0f766e' : '#92400e'}; font-weight:600;">
+                            <div style="margin-top:12px; padding:6px 12px; border-radius:6px; display:inline-block; background:${dev.status.includes('Available') ? '#d1fae5' : '#fef3c7'}; color:${dev.status.includes('Available') ? '#0f766e' : '#92400e'}; font-weight:600;">
                                 ${dev.status}
                             </div>
                         </div>
@@ -209,20 +212,18 @@
             });
         }
 
-        // Populate layers
         addMarkers(constructionLayer, developments.construction, orangeIcon);
         addMarkers(pipelineLayer, developments.pipeline, tealIcon);
 
         constructionLayer.addTo(map);
         pipelineLayer.addTo(map);
 
-        // Layer control (blue dot for pipeline)
         L.control.layers({
             "🗺️ Topographic": topoLayer,
             "🛰️ Satellite": satelliteLayer
         }, {
             "🟠 Under Construction": constructionLayer,
-            "🔵 Active Pipeline": pipelineLayer   // Changed from green to blue
+            "🔵 Active Pipeline": pipelineLayer
         }, { collapsed: false, position: 'topright' }).addTo(map);
 
         // Legend
@@ -231,20 +232,14 @@
             const div = L.DomUtil.create('div', 'legend');
             div.innerHTML = `
                 <div style="font-weight:700; color:var(--gold); margin-bottom:12px;">Development Status</div>
-                <div style="display:flex; align-items:center; gap:12px; margin:8px 0;">
-                    <div style="width:26px;height:26px;background:#f59e0b;border-radius:50%;"></div>
-                    <strong>Under Construction</strong>
-                </div>
-                <div style="display:flex; align-items:center; gap:12px; margin:8px 0;">
-                    <div style="width:26px;height:26px;background:#22d3ee;border-radius:50%;"></div>
-                    <strong>Active Pipeline</strong>
-                </div>
+                <div style="display:flex; align-items:center; gap:12px; margin:8px 0;"><div style="width:26px;height:26px;background:#f59e0b;border-radius:50%;"></div><strong>Under Construction</strong></div>
+                <div style="display:flex; align-items:center; gap:12px; margin:8px 0;"><div style="width:26px;height:26px;background:#22d3ee;border-radius:50%;"></div><strong>Active Pipeline</strong></div>
             `;
             return div;
         };
         legend.addTo(map);
 
-        // Project selector
+        // Project dropdown
         const select = document.getElementById('projectSelect');
         allProjects.forEach(project => {
             const option = document.createElement('option');
@@ -256,11 +251,10 @@
         select.addEventListener('change', function() {
             const name = this.value;
             if (!name) return;
-            
             const project = allProjects.find(p => p.name === name);
             if (project && markers[name]) {
-                map.flyTo([project.lat, project.lng], 15, { duration: 1.5, paddingTopLeft: [0, 80] });
-                setTimeout(() => markers[name].openPopup(), 1600);
+                map.flyTo([project.lat, project.lng], 15, { duration: 1.6, paddingTopLeft: [0, 80] });
+                setTimeout(() => markers[name].openPopup(), 1700);
             }
         });
     </script>
