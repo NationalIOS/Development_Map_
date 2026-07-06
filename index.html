@@ -161,7 +161,7 @@
                 { name: "South Prosperity", city: "Krugerville, TX", lat: 33.26495, lng: -96.98484, size: "64,950 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 16, 2026, 07_42_34 AM.png", address: "Block A, Prosperity Way, Krugerville, TX 76227", acres: "21.41 AC", lots: "7 IOS Lots", brochure: "" },
                 { name: "Waxahachie IOS", city: "Waxahachie, TX", lat: 32.36899, lng: -96.87912, size: "23,200 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 15, 2026, 01_36_56 PM.png", address: "", acres: "", lots: "", brochure: "" },
                 { name: "San Marcos IOS Park", city: "San Marcos, TX", lat: 29.80152, lng: -97.99933, size: "107,600 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/san-marcos-ios-park.png", address: "6226 Old Bastrop Hwy, San Marcos, TX 78666", acres: "", lots: "8 IOS Lots", brochure: "" },
-                { name: "Heritage 287", city: "Mansfield, TX", lat: 32.56719, lng: -97.11799, size: "258,444 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/heritage-287.png", address: "", acres: "", lots: "", brochure: "" },
+                { name: "Heritage 287", city: "Mansfield, TX", lat: 32.55875, lng: -97.11495, size: "258,444 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/heritage-287.png", address: "", acres: "", lots: "", brochure: "" },
                 { name: "Mansfield Lakeview", city: "Mansfield, TX", lat: 32.54287, lng: -97.06734, size: "22,800 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/mansfield-lakeview.png", address: "1266 Lakeview Drive, Mansfield, TX 76065", acres: "13.96 AC", lots: "", brochure: "" },
                 { name: "Melissa Industrial - Master Halco", city: "Melissa, TX", lat: 33.29634, lng: -96.53752, size: "", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/ChatGPT Image Jun 15, 2026, 01_44_26 PM.png", address: "3550 Industrial Drive, Melissa, TX 75454", acres: "3.34 AC", lots: "1 IOS Lots", brochure: "" }
             ],
@@ -226,7 +226,6 @@
             "🔵 Active Pipeline": pipelineLayer
         }, { collapsed: false, position: 'topright' }).addTo(map);
 
-        // Legend
         const legend = L.control({ position: 'bottomright' });
         legend.onAdd = function () {
             const div = L.DomUtil.create('div', 'legend');
@@ -239,7 +238,6 @@
         };
         legend.addTo(map);
 
-        // Project dropdown
         const select = document.getElementById('projectSelect');
         allProjects.forEach(project => {
             const option = document.createElement('option');
