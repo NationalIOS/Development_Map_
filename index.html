@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserve Capital Partners • Development Pipeline</title>
+    <title>National IOS • Current Projects</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -38,7 +38,6 @@
         .logo i { font-size: 46px; color: var(--teal); filter: drop-shadow(0 3px 8px rgba(34, 211, 238, 0.4)); }
         h1 { font-size: 28px; font-weight: 700; letter-spacing: -1.2px; }
         .subtitle { font-size: 14.8px; opacity: 0.85; margin-top: 2px; }
-
         .controls { display: flex; align-items: center; gap: 20px; }
         select {
             background: rgba(15, 23, 42, 0.95);
@@ -54,10 +53,8 @@
             border-color: var(--teal);
             box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
         }
-
         #map { height: calc(100vh - 82px); width: 100%; }
         .custom-marker { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6)); }
-
         .leaflet-popup-content-wrapper {
             border-radius: 18px;
             box-shadow: 0 25px 70px rgba(0,0,0,0.8);
@@ -72,7 +69,6 @@
         }
         .popup-title { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
         .popup-city { opacity: 0.9; font-size: 15.5px; }
-
         .popup-body { padding: 24px 26px; line-height: 1.75; }
         .popup-body strong { display: inline-block; width: 120px; color: var(--accentblue); }
         .popup-image {
@@ -100,7 +96,6 @@
             background: #67e8f9;
             transform: translateY(-2px);
         }
-
         .legend {
             background: rgba(15,23,42,0.97);
             padding: 16px 22px;
@@ -117,33 +112,29 @@
         <div class="logo">
             <i class="fas fa-building"></i>
             <div>
-                <h1>Reserve Capital Partners</h1>
-                <div class="subtitle">Texas Industrial Development Pipeline • Q2 2026</div>
+                <h1>National IOS</h1>
+                <div class="subtitle">Texas Industrial • Current Projects • Q3 2026</div>
             </div>
         </div>
-        
+       
         <div class="controls">
             <select id="projectSelect">
                 <option value="">— Select a Project —</option>
             </select>
         </div>
-
         <div class="stats">
             <strong>12 Active Projects</strong><br>
             <span style="opacity:0.85; font-size:13.8px;">Live Development Map</span>
         </div>
     </div>
-
     <div id="map"></div>
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const map = L.map('map', { zoomControl: true }).setView([31.8, -97.2], 7);
-        
+       
         const topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { attribution: '© Esri', maxZoom: 19 });
         const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '© Esri', maxZoom: 19 });
         topoLayer.addTo(map);
-
         const createIcon = (color) => L.divIcon({
             className: 'custom-marker',
             html: `<div style="width:34px;height:34px;background:${color};border:3.5px solid white;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,0.5),inset 0 2px 4px rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;"><div style="width:11px;height:11px;background:rgba(255,255,255,0.95);border-radius:50%;"></div></div>`,
@@ -151,10 +142,8 @@
             iconAnchor: [17, 17],
             popupAnchor: [0, -26]
         });
-
         const orangeIcon = createIcon('#f59e0b');
-        const tealIcon   = createIcon('#22d3ee');
-
+        const tealIcon = createIcon('#22d3ee');
         const developments = {
             construction: [
                 { name: "Rockwall Industrial", city: "Rockwall, TX", lat: 32.90745, lng: -96.42921, size: "285,000 SF", status: "Under Construction", image: "https://raw.githubusercontent.com/jakepistone/rcp-development-map/main/rockwall-industrial.png", address: "", acres: "", lots: "", brochure: "" },
@@ -174,12 +163,10 @@
                 { name: "North Fort Worth", city: "North Fort Worth, TX", lat: 32.99283, lng: -97.28642, size: "22,800 SF", status: "Active Pipeline", image: "", address: "", acres: "5.33 AC", lots: "", brochure: "" }
             ]
         };
-
         const allProjects = [...developments.construction, ...developments.pipeline];
         const markers = {};
         const constructionLayer = L.layerGroup();
         const pipelineLayer = L.layerGroup();
-
         function addMarkers(layer, projects, icon) {
             projects.forEach(dev => {
                 const html = `
@@ -194,30 +181,25 @@
                             ${dev.acres ? `<div><strong>Acres:</strong> ${dev.acres}</div>` : ''}
                             ${dev.size ? `<div><strong>Building:</strong> ${dev.size}</div>` : ''}
                             ${dev.lots ? `<div><strong>Lots:</strong> ${dev.lots}</div>` : ''}
-                            
+                           
                             ${dev.brochure ? `<a href="${dev.brochure}" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download Brochure</a>` : ''}
-                            
+                           
                             <div style="margin-top:12px; padding:6px 12px; border-radius:6px; display:inline-block; background:${dev.status.includes('Available') ? '#d1fae5' : '#fef3c7'}; color:${dev.status.includes('Available') ? '#0f766e' : '#92400e'}; font-weight:600;">
                                 ${dev.status}
                             </div>
                         </div>
                     </div>
                 `;
-
                 const marker = L.marker([dev.lat, dev.lng], { icon, riseOnHover: true })
                     .bindPopup(html, { maxWidth: 520 })
                     .addTo(layer);
-
                 markers[dev.name] = marker;
             });
         }
-
         addMarkers(constructionLayer, developments.construction, orangeIcon);
         addMarkers(pipelineLayer, developments.pipeline, tealIcon);
-
         constructionLayer.addTo(map);
         pipelineLayer.addTo(map);
-
         L.control.layers({
             "🗺️ Topographic": topoLayer,
             "🛰️ Satellite": satelliteLayer
@@ -225,7 +207,6 @@
             "🟠 Under Construction": constructionLayer,
             "🔵 Active Pipeline": pipelineLayer
         }, { collapsed: false, position: 'topright' }).addTo(map);
-
         const legend = L.control({ position: 'bottomright' });
         legend.onAdd = function () {
             const div = L.DomUtil.create('div', 'legend');
@@ -237,7 +218,6 @@
             return div;
         };
         legend.addTo(map);
-
         const select = document.getElementById('projectSelect');
         allProjects.forEach(project => {
             const option = document.createElement('option');
@@ -245,7 +225,6 @@
             option.textContent = project.name;
             select.appendChild(option);
         });
-
         select.addEventListener('change', function() {
             const name = this.value;
             if (!name) return;
